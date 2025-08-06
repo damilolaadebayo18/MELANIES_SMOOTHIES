@@ -25,14 +25,15 @@ session = cnx.session()
 # st.write("Your favourite fruit is:", option)
 
 #session = get_active_session()
-my_dataframe = session.table("smoothies.public.fruit_options")
-#st.dataframe(data=my_dataframe, use_container_width=True)
-
-fruit_list = [row['FRUIT_NAME'] for row in my_dataframe.select(col("FRUIT_NAME")).collect()]
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
+st.dataframe(data=my_dataframe, use_container_width=True)
+st.stop()
+                                                                      
+#fruit_list = [row['FRUIT_NAME'] for row in my_dataframe.select(col("FRUIT_NAME")).collect()]
 
 ingredients_list = st.multiselect(
     ' choose up to 5 ingredients:'
-    , fruit_list
+    , my_dataframe
     , max_selections=5
 )
 
